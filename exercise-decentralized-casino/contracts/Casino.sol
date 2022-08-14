@@ -33,7 +33,29 @@ contract Casino is usingProvable {
     }
 
     function bet(uint256 numberToBet) public payable {
-        // TODO: Implementation
+        require(numberOfBets < maxNumberOfBets, "Bet table is full.");
+        require(
+            numberToBet >= 1 && numberToBet <= 10, 
+            "Choose a bet number between 1 and 10."
+        );
+        require(
+            msg.value >= minimumBet,
+            "Bet is less than specified minimum bet."
+        );
+        require(
+            playerBets[msg.sender] == 0,
+            "You are not allowed to change your bet."
+        );
+
+        playerBets[msg.sender] = numberToBet;
+        bets[numberToBet].push(msg.sender);
+        players.push(msg.sender);
+
+        numberOfBets += 1;
+
+        if (numberOfBets >= maxNumberOfBets) {
+            generateWinningNumber();
+        }
     }
 
     function generateWinningNumber() public payable {
