@@ -59,7 +59,14 @@ contract Casino is usingProvable {
     }
 
     function generateWinningNumber() public payable {
-        // TODO: Implementation
+        uint256 delay = 0;
+        uint256 numberRandomBytes = 7;
+        uint256 callbackGasLimit = 400000;
+
+        provable_newRandomDSQuery(delay, numberRandomBytes, callbackGasLimit);
+        emit LogNewProvableQuery(
+            "Provable query was sent, standing by for the answer..."
+        );
     }
 
     function __callback(
@@ -67,18 +74,51 @@ contract Casino is usingProvable {
         string memory _result,
         bytes memory _proof
     ) public {
-        // TODO: Implementation
+        require(msg.sender == provable_cbAddress(), "Bad callback");
+        require(
+            provable_randomDS_proofVerify__returnCode(
+                _queryID, 
+                _result, 
+                _proof
+            ) ==
+                0,
+            "Bad proof"
+        );
+        emit generatedRandomNumber(_result);
+
+        bytes32 encodedRandom = keccak256(abi.encodePacked(_result));
+        winningNumber = (uint256(encodedRandom) % 10) + 1;
+        distributePrizes();
     }
 
     function distributePrizes() public {
-        // TODO: Implementation
+        uint256 winningBets = bets[winningNumber].length;
+
+        if (winningBets != 0) {
+            uint256 prize = address(this).balance / winningBets;
+
+            for (uint256 i = 0; i < winningBets; i++) {
+                address payable winner = bets[winningNumber][i];
+                winner.transfer(prize);
+            }
+        }
+
+        resetBets();
     }
 
     function resetBets() private {
-        // TODO: Implementation
+        for (uint256 i = 1; i <= 10; i++) {
+            bets[i].length = 0;
+        }
+
+        for (uint256 i = 0; i < players.length; i++) {
+            playerBets[players[i]] = 0;
+        }
+
+        numberOfBets = 0;
     }
 
     function getContractBalance() public view returns(uint256 balance) {
-        // TODO: Implementation
+        return address(this).balance;
     }
 }
