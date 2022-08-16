@@ -7,8 +7,8 @@
 
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 
-const INFURA_KEY = "YOUR-OWN-INFURA-KEY";  // REPLACE WITH YOUR OWN KEY
-const MNEMONIC = "YOUR-OWN-MNENOMIC";  // REPLACE WITH YOUR OWN MNEMONIC
+const INFURA_KEY = "a288ef1245924ce8a9007b07df9eba70";  // REPLACE WITH YOUR OWN KEY
+const MNEMONIC = "confirm peasant elegant use city thing flat breeze village perfect ivory weekend unfold book zone";  // REPLACE WITH YOUR OWN MNEMONIC
 
 module.exports = {
   /**
