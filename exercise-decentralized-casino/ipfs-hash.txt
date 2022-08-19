@@ -1,0 +1,6 @@
+build folder hash: QmP7o1QsNF7oMpG9ujfvUp4LXiGGmo2KMyt8g7SatXDqME
+
+to make changes to files:
+npm run build
+ipfs add -r QmP7o1QsNF7oMpG9ujfvUp4LXiGGmo2KMyt8g7SatXDqME
+ipfs name publish QmP7o1QsNF7oMpG9ujfvUp4LXiGGmo2KMyt8g7SatXDqME
