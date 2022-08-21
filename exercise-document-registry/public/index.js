@@ -84,6 +84,30 @@ $(document).ready(function() {
             .contract(documentRegistryContractABI)
             .at(documentRegistryContractAddress);
         console.log(contract);
+
+        IPFS.files.add(fileBuffer, (err, res) => {
+            if (err) {
+                showError(err);
+                return;
+            }
+
+            if (res) {
+                let ipfsHash = res[0].hash;
+                contract.add(ipfsHash, (error, txHash) => {
+                    if (error) {
+                        showError("Smart contract call failed: " + error);
+                        return;
+                    }
+
+                    if (txHash) {
+                        showInfo(
+                            `Document ${ipfsHash} successfully added to the registry! Transaction hash: ${txHash}`
+                        );
+                        return;
+                    }
+                });
+            }
+        });
     };
 
     fileReader.readAsArrayBuffer($("#documentForUpload")[0].files[0]);
