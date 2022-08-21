@@ -65,7 +65,28 @@ $(document).ready(function() {
   // === User Interface Interactions End ===
 
   function uploadDocument() {
-    // Todo: Implementation
+    if ($("#documentForUpload")[0].files.length === 0) {
+        showError("Please select file to upload!");
+        return;
+    }
+
+    let fileReader = new FileReader();
+    fileReader.onload = function () {
+        if (typeof web3 === "undefined") {
+            showError(
+                "Please install MetaMask to access the Ethereum Web3 API from your browser"
+            );
+            return;
+        }
+
+        let fileBuffer = Buffer.from(fileReader.result);
+        let contract = web3.eth
+            .contract(documentRegistryContractABI)
+            .at(documentRegistryContractAddress);
+        console.log(contract);
+    };
+
+    fileReader.readAsArrayBuffer($("#documentForUpload")[0].files[0]);
   }
 
   function viewGetDocuments() {
