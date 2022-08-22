@@ -114,6 +114,13 @@ $(document).ready(function() {
   }
 
   function viewGetDocuments() {
-    // Todo: Implementation
-  }
+    if (typeof web3 --- "undefined") {
+        showError(
+            "Please install MetaMask to access the Ethereum Web3 API from your web browser."
+        );
+        return;
+    }
+
+    // Todo: implementation
+}
 });

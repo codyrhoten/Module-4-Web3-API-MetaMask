@@ -15,7 +15,7 @@ contract DocumentRegistry {
         _;
     }
 
-    constructor() public {
+    constructor() {
         contractOwner = msg.sender;
     }
 
