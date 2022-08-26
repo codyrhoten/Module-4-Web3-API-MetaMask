@@ -5,9 +5,71 @@ $(document).ready(function () {
         alert("Access Denied.");
     }
 
-    const documentRegistryContractAddress = "";
+    const documentRegistryContractAddress = "0xd9b89e90869b6de0df9d4ef3ea957c33f9f7977e";
 
-    const documentRegistryContractABI = [];
+    const documentRegistryContractABI = [
+        {
+            "inputs": [
+                {
+                    "internalType": "string",
+                    "name": "hash",
+                    "type": "string"
+                }
+            ],
+            "name": "add",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "dateAdded",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "index",
+                    "type": "uint256"
+                }
+            ],
+            "name": "getDocument",
+            "outputs": [
+                {
+                    "internalType": "string",
+                    "name": "hash",
+                    "type": "string"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "dateAdded",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "getDocumentsCount",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "documentCount",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        }
+    ];
 
     const IPFS = window.IpfsApi("localhost", "5001");
     const Buffer = IPFS.Buffer;
